@@ -1,0 +1,34 @@
+@import "../../styles/variables.scss";
+
+.superheroInfo {
+  width: 50%;
+
+  .nickname {
+    margin-bottom: 20px;
+    font-size: 40px;
+    text-decoration: underline;
+  }
+
+  .info {
+    font-size: 20px;
+    color: $secondary-text-color;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    span {
+      margin-right: 10px;
+      font-weight: 700;
+      color: $main-text-color;
+    }
+  }
+
+  .superpowers {
+    text-transform: lowercase;
+
+    span {
+      text-transform: capitalize;
+    }
+  }
+}

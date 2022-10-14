@@ -1,0 +1,15 @@
+@import "../../styles/variables.scss";
+
+.toolbarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+
+  .addButton {
+    .icon {
+      margin-right: 5px;
+      fill: $background-color;
+    }
+  }
+}

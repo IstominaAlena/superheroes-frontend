@@ -1,0 +1,19 @@
+@import "../../styles/variables.scss";
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: $accent-color;
+  background-image: linear-gradient(to right, $gradient-color, $gradient-color),
+    url("../../images/superheroes.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.text {
+  font-size: 20px;
+  color: $background-color;
+}

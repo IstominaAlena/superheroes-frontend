@@ -1,0 +1,34 @@
+@import "../../styles/variables.scss";
+
+.galleryContainer {
+  margin-top: 20px;
+  padding: 20px 0;
+  border-top: 1px solid $line-color;
+
+  .title {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .galleryList {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -30px;
+    margin-top: -30px;
+    margin-bottom: 20px;
+
+    .galleryItem {
+      width: 100%;
+      margin-left: 30px;
+      margin-top: 30px;
+      flex-basis: calc((100% - 5 * 30px) / 5);
+      border: 1px solid transparent;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        border-color: $accent-color;
+      }
+    }
+  }
+}

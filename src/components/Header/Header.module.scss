@@ -1,0 +1,28 @@
+@import "../../styles/variables.scss";
+
+.headerSection {
+  background-color: $accent-color;
+  background-image: linear-gradient(to right, $gradient-color, $gradient-color),
+    url("../../images/superheroes.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 200px;
+
+  .headerContainer {
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .logoLink {
+      font-size: 50px;
+      font-weight: 700;
+      color: $background-color;
+
+      &:hover,
+      &:focus {
+        color: $accent-hover-color;
+      }
+    }
+  }
+}

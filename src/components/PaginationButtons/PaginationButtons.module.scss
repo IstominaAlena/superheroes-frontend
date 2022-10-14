@@ -1,0 +1,20 @@
+@import "../../styles/variables.scss";
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  .paginationButton {
+    width: 100px;
+
+    &:not(:last-child) {
+      margin-right: 50px;
+    }
+
+    .icon {
+      fill: $background-color;
+    }
+  }
+}
