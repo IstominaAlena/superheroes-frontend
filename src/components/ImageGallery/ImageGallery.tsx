@@ -11,10 +11,12 @@ import styles from "./ImageGallery.module.scss";
 export const ImageGallery = () => {
 	const currentSuperhero = useAppSelector(selectCurrentSuperheroes);
 
-	const renderGalleryItem = (item: string) => {
-		const imageUrl = BASE_URL + item;
+	// TODO
+	const renderGalleryItem = (item: File) => {
+		const urlCreator = window.URL || window.webkitURL;
+   	const imageUrl = urlCreator.createObjectURL(item);
 		return (
-			<li className={styles.galleryItem} key={item}>
+			<li className={styles.galleryItem} key={imageUrl}>
 				<img
 					src={imageUrl}
 					alt={currentSuperhero?.nickname}
@@ -30,7 +32,7 @@ export const ImageGallery = () => {
 		<div className={styles.galleryContainer}>
 			<h2 className={styles.title}>Image gallery</h2>
 			<ul className={styles.galleryList}>
-				{currentSuperhero?.images?.map(renderGalleryItem)}
+				{currentSuperhero?.images.map(renderGalleryItem)}
 			</ul>
 
 			{/* <form

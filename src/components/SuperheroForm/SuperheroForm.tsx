@@ -21,7 +21,7 @@ const initialValues: IAddSuperheroBody = {
 	origin_description: "",
 	superpowers: "",
 	catch_phrase: "",
-	images: []
+	images: [],
 };
 
 export const SuperheroForm = ({ onCloseModal, formState }: IProps) => {
@@ -33,7 +33,7 @@ export const SuperheroForm = ({ onCloseModal, formState }: IProps) => {
 			<Formik
 				initialValues={initialValues}
 				onSubmit={(values, { resetForm }) => {
-					// dispatch(addSuperhero(values));
+					dispatch(addSuperhero(values));
 				}}
 			>
 				{props => (
@@ -82,9 +82,7 @@ export const SuperheroForm = ({ onCloseModal, formState }: IProps) => {
 							id="file"
 							name="images"
 							type="file"
-							onChange={(event) => {
-								props.setFieldValue("images", event.currentTarget.files ?? []);
-							}}
+							onChange={event => props.setFieldValue('images', Array.from(event.target.files!))}
 							multiple
 						/>
 						<Button

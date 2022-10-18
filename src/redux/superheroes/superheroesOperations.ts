@@ -49,7 +49,16 @@ export const addSuperhero = createAsyncThunk<ISuperheroItem | undefined, IAddSup
 	"superheroes/addSuperhero",
 	async (superhero) => {		
 		try {
-			const { data } = await instance.post<ISuperheroItem>(EPath.SUPERHEROES, superhero);
+			// TODO
+			const formData = new FormData();
+			for (let hero in superhero) {
+				const item = superhero[hero as keyof IAddSuperheroBody];
+				Array.isArray(item)
+					? (item as Array<File>).forEach((el: File) => formData.append(hero, el))
+				 	: formData.append(hero, item)
+			}
+
+			const { data } = await instance.post<ISuperheroItem>(EPath.SUPERHEROES, formData);
 			return data;
 		} catch (error) {
 			if (error instanceof Error) {

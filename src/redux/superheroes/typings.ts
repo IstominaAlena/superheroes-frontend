@@ -26,7 +26,7 @@ export interface IGetAllSuperheroesBody {
 };
 
 export interface IAddSuperheroBody extends IUpdateSuperhero {
-	images?: Array<any>,
+	images: Array<File>, // TODO
 };
 
 export interface IUpdateSuperheroBody {
