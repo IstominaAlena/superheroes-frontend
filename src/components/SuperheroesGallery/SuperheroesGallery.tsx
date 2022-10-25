@@ -2,13 +2,19 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../../utils/useAppDispatch";
-import { selectAllSuperheroes, selectPage } from "../../redux/superheroes/superheroesSelectors";
+import {
+	selectAllSuperheroes,
+	selectPage,
+	selectSuperheroesError,
+	selectSuperheroesIsLoading,
+} from "../../redux/superheroes/superheroesSelectors";
 import { useAppSelector } from "../../utils/useAppSelector";
 import { ISuperheroItem } from "../../redux/superheroes/typings";
 import { BASE_URL } from "../../constants/apiConstants";
 import { getAllSuperheroes, getSuperheroById } from "../../redux/superheroes/superheroesOperations";
 import { imagePlaceholder } from "../../constants/frontenConstants";
 
+import { QueryWrapper } from "../../reusable/components/QueryWrapper";
 import { SectionWrapper } from "../../reusable/components/SectionWrapper";
 import { PaginationButtons } from "../PaginationButtons";
 
@@ -20,10 +26,12 @@ export const SuperheroesGallery = () => {
 
 	const superheroes = useAppSelector(selectAllSuperheroes);
 	const currentPage = useAppSelector(selectPage);
+	const isLoading = useAppSelector(selectSuperheroesIsLoading);
+	const error = useAppSelector(selectSuperheroesError);
 
 	useEffect(() => {
 		dispatch(getAllSuperheroes({ page: currentPage, nickname: "" }));
-	}, [currentPage]);
+	}, [currentPage, superheroes.length]);
 
 	const renderSuperheroesCard = (item: ISuperheroItem) => {
 		const imageUrl = item?.images && item.images.length > 0
@@ -43,14 +51,14 @@ export const SuperheroesGallery = () => {
 		navigate(`/${id}`);
 	};
 
-
-
 	return (
-		<SectionWrapper className={styles.gallerySection}>
-			<ul className={styles.superheroesList}>
-				{superheroes.map(renderSuperheroesCard)}
-			</ul>
-			<PaginationButtons />
-		</SectionWrapper>
+		<QueryWrapper loading={isLoading} data={superheroes} error={error}>
+			<SectionWrapper className={styles.gallerySection}>
+				<ul className={styles.superheroesList}>
+					{superheroes.map(renderSuperheroesCard)}
+				</ul>
+				<PaginationButtons />
+			</SectionWrapper>
+		</QueryWrapper>
 	);
 };

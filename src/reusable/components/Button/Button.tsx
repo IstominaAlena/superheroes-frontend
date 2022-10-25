@@ -8,7 +8,7 @@ import styles from "./Button.module.scss";
 interface IProps {
 	children: React.ReactNode,
 	type?: ButtonTypes,
-	onClick?: () => void,
+	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
 	className?: string,
 };
 

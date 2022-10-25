@@ -14,9 +14,9 @@ import storage from "redux-persist/lib/storage";
 import { superheroesReducer } from "./superheroes/superheroesSlice";
 
 const superheroesPersistConfig = {
-	key: "superheroes/currentPage",
+	key: "superheroes",
 	storage,
-	whitelist: ["page", "currentSuperhero"]
+	whitelist: ["page"]
 };
 
 const superheroesPersistReducer = persistReducer(superheroesPersistConfig, superheroesReducer);

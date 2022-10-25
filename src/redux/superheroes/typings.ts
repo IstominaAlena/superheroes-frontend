@@ -16,8 +16,14 @@ export interface IGetAllSuperheroesResponce {
 	amount: number,
 };
 
-export interface ISuperheroItem extends IAddSuperheroBody {
+export interface ISuperheroItem {
 	_id: string,
+	nickname: string,
+	real_name: string,
+	origin_description: string,
+	superpowers: string,
+	catch_phrase: string,
+	images: Array<string>,
 };
 
 export interface IGetAllSuperheroesBody {
@@ -26,12 +32,12 @@ export interface IGetAllSuperheroesBody {
 };
 
 export interface IAddSuperheroBody extends IUpdateSuperhero {
-	images: Array<File>, // TODO
+	images: Array<File>,
 };
 
 export interface IUpdateSuperheroBody {
 	id: string,
-	updateBody: IUpdateSuperhero;
+	updateBody: IUpdateSuperhero,
 };
 
 export interface IUpdateSuperhero {
@@ -40,4 +46,18 @@ export interface IUpdateSuperhero {
 	origin_description: string,
 	superpowers: string,
 	catch_phrase: string,
+};
+
+export interface IDeleteSuperheroImageBody {
+	id: string,
+	image: string,
+};
+
+export interface IAddImageBody {
+	imageData: FormData,
+	id: string;
+};
+
+export interface IAddImage {
+	images: Array<File>,
 };

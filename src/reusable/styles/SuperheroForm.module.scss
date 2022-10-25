@@ -1,0 +1,48 @@
+@import "../../styles/variables.scss";
+
+.formTitle {
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: $accent-color;
+  text-decoration: underline;
+}
+
+.form {
+  .uploadInput {
+    border: none;
+    padding: 0;
+    outline: none;
+    width: 100%;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 16px;
+
+    &::-webkit-file-upload-button {
+      margin-right: 10px;
+      padding: 8px 15px;
+      outline: none;
+      border: 1px solid $accent-color;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1;
+      color: $accent-color;
+      background-color: $background-color;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        border-color: $accent-hover-color;
+        color: $accent-hover-color;
+      }
+    }
+  }
+
+  .continueButton {
+    display: block;
+    margin: 20px auto 0;
+  }
+}

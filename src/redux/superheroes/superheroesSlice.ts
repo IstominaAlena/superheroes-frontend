@@ -6,6 +6,9 @@ import {
 	getSuperheroById,
 	addSuperhero,
 	deleteSuperhero,
+	updateSuperheroInfo,
+	deleteSuperheroImage,
+	addSuperheroImage,
 } from "./superheroesOperations";
 
 const initialState: ISuperheroes = {
@@ -58,12 +61,35 @@ const superheroSlice = createSlice({
 				state.currentSuperhero = initialState.currentSuperhero;
 			}
 		);
+		builder.addCase(
+			updateSuperheroInfo.fulfilled,
+			(state, { payload }) => {
+				state.superheroes = state.superheroes.map(
+					(item) => item._id === payload?._id ? payload : item
+				);
+				state.isLoading = false;
+				state.currentSuperhero = payload ?? initialState.currentSuperhero;
+			}
+		);
+		builder.addMatcher(
+			isAnyOf(
+				deleteSuperheroImage.fulfilled,
+				addSuperheroImage.fulfilled,
+			),
+			(state, { payload }) => {
+				state.isLoading = false;
+				state.currentSuperhero = payload ?? initialState.currentSuperhero;
+			}
+		);
 		builder.addMatcher(
 			isAnyOf(
 				getAllSuperheroes.pending,
 				getSuperheroById.pending,
 				addSuperhero.pending,
 				deleteSuperhero.pending,
+				updateSuperheroInfo.pending,
+				deleteSuperheroImage.pending,
+				addSuperheroImage.pending,
 			),
 			(state) => {
 				state.isLoading = true;
@@ -76,6 +102,9 @@ const superheroSlice = createSlice({
 				getSuperheroById.rejected,
 				addSuperhero.rejected,
 				deleteSuperhero.rejected,
+				updateSuperheroInfo.rejected,
+				deleteSuperheroImage.rejected,
+				addSuperheroImage.rejected,
 			),
 			(state, { error }) => {
 				state.error = error.message ?? initialState.error;

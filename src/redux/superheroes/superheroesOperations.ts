@@ -3,7 +3,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../utils/axiosInstance";
 import { EPath, SUPERHEROES_PER_PAGE } from "../../constants/apiConstants";
 import {
-	IAddSuperheroBody,
+	IAddImageBody,
+	IDeleteSuperheroImageBody,
 	IGetAllSuperheroesBody,
 	IGetAllSuperheroesResponce,
 	ISuperheroItem,
@@ -15,7 +16,8 @@ export const getAllSuperheroes = createAsyncThunk
 	("superheroes/getAllSuperheroes",
 		async ({ page, nickname }) => {
 			try {
-				const { data } = await instance.get<IGetAllSuperheroesResponce>(EPath.SUPERHEROES, {
+				const { data } = await instance.get<IGetAllSuperheroesResponce>(
+					EPath.SUPERHEROES, {
 					params: {
 						limit: SUPERHEROES_PER_PAGE,
 						page,
@@ -45,20 +47,11 @@ export const getSuperheroById = createAsyncThunk<ISuperheroItem | undefined, str
 	}
 );
 
-export const addSuperhero = createAsyncThunk<ISuperheroItem | undefined, IAddSuperheroBody>(
+export const addSuperhero = createAsyncThunk<ISuperheroItem | undefined, FormData>(
 	"superheroes/addSuperhero",
-	async (superhero) => {		
+	async (superhero) => {
 		try {
-			// TODO
-			const formData = new FormData();
-			for (let hero in superhero) {
-				const item = superhero[hero as keyof IAddSuperheroBody];
-				Array.isArray(item)
-					? (item as Array<File>).forEach((el: File) => formData.append(hero, el))
-				 	: formData.append(hero, item)
-			}
-
-			const { data } = await instance.post<ISuperheroItem>(EPath.SUPERHEROES, formData);
+			const { data } = await instance.post<ISuperheroItem>(EPath.SUPERHEROES, superhero);
 			return data;
 		} catch (error) {
 			if (error instanceof Error) {
@@ -87,7 +80,9 @@ export const updateSuperheroInfo = createAsyncThunk
 	("superheroes/updateSuperheroInfo",
 		async ({ id, updateBody }) => {
 			try {
-				const { data } = await instance.put<ISuperheroItem>(EPath.SUPERHEROES + "/" + id, updateBody);
+				const { data } = await instance.put<ISuperheroItem>(
+					EPath.SUPERHEROES + "/" + id, updateBody
+				);
 				return data;
 			} catch (error) {
 				if (error instanceof Error) {
@@ -97,10 +92,39 @@ export const updateSuperheroInfo = createAsyncThunk
 		}
 	);
 
-// export const updateSuperheroImage = createAsyncThunk(
-// 	"superheroes/updateSuperheroImage",
-// 	async() => {
-		 
-// 	 }
-// );
-	
+export const deleteSuperheroImage = createAsyncThunk
+	<ISuperheroItem | undefined, IDeleteSuperheroImageBody>
+	("superheroes/deleteSuperheroImage",
+		async ({ id, image }) => {
+			try {
+				const { data } = await instance.patch<ISuperheroItem>(
+					EPath.SUPERHEROES + "/" + id + "/image-to-delete",
+					{ image }
+				);
+				return data;
+			} catch (error) {
+				if (error instanceof Error) {
+					throw new Error(error.message);
+				};
+			}
+		}
+	);
+
+export const addSuperheroImage = createAsyncThunk
+	<ISuperheroItem | undefined, IAddImageBody>
+	("superheroes/addSuperheroImage",
+		async ({ id, imageData }) => {
+			try {
+				const { data } = await instance.patch<ISuperheroItem>(
+					EPath.SUPERHEROES + "/" + id + "/images",
+					imageData
+				);
+				return data;
+			} catch (error) {
+				if (error instanceof Error) {
+					throw new Error(error.message);
+				};
+			}
+		}
+	);
+

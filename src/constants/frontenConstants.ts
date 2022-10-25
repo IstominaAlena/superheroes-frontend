@@ -25,3 +25,12 @@ export const errorMessage: IErrorMessage = {
 export const accentColor = "rgb(97, 149, 237)";
 
 export const imagePlaceholder = "https://via.placeholder.com/150x200.png?text=No+image";
+
+export const FILE_SIZE = 160 * 1024;
+
+export const SUPPORTED_FORMATS = [
+	"image/jpg",
+	"image/jpeg",
+	"image/gif",
+	"image/png"
+];

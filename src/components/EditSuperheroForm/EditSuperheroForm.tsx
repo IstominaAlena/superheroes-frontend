@@ -1,43 +1,48 @@
 import { Formik } from "formik";
 
+import { IUpdateSuperhero } from "../../redux/superheroes/typings";
+import { ButtonTypes } from "../../constants/frontenConstants";
 import { useAppDispatch } from "../../utils/useAppDispatch";
-import { addSuperhero } from "../../redux/superheroes/superheroesOperations";
+import { useAppSelector } from "../../utils/useAppSelector";
+import { selectCurrentSuperheroes } from "../../redux/superheroes/superheroesSelectors";
+import { updateSuperheroInfo } from "../../redux/superheroes/superheroesOperations";
+import { ErrorAEditSuperheroSchema } from "../../utils/validationSchemas";
 
-import { ButtonTypes, EFormState } from "../../constants/frontenConstants";
-import { IAddSuperheroBody } from "../../redux/superheroes/typings";
-import { FormikInput } from "../../reusable/components/FormikInput";
 import { Button } from "../../reusable/components/Button";
+import { FormikInput } from "../../reusable/components/FormikInput";
 
-import styles from "./SuperheroForm.module.scss";
+import styles from "../../reusable/styles/SuperheroForm.module.scss";
 
 interface IProps {
 	onCloseModal: () => void;
-	formState: EFormState;
 };
 
-const initialValues: IAddSuperheroBody = {
-	nickname: "",
-	real_name: "",
-	origin_description: "",
-	superpowers: "",
-	catch_phrase: "",
-	images: [],
-};
-
-export const SuperheroForm = ({ onCloseModal, formState }: IProps) => {
+export const EditSuperheroForm = ({ onCloseModal }: IProps) => {
 	const dispatch = useAppDispatch();
+
+	const superhero = useAppSelector(selectCurrentSuperheroes);
+
+	const initialValues: IUpdateSuperhero = {
+		nickname: superhero?.nickname ?? "",
+		real_name: superhero?.real_name ?? "",
+		origin_description: superhero?.origin_description ?? "",
+		superpowers: superhero?.superpowers ?? "",
+		catch_phrase: superhero?.catch_phrase ?? "",
+	};
 
 	return (
 		<div>
-			<h3 className={styles.formTitle}>Add superhero</h3>
+			<h3 className={styles.formTitle}>Edit superhero</h3>
 			<Formik
 				initialValues={initialValues}
-				onSubmit={(values, { resetForm }) => {
-					dispatch(addSuperhero(values));
+				validationSchema={ErrorAEditSuperheroSchema}
+				onSubmit={(values) => {
+					dispatch(updateSuperheroInfo({ id: superhero?._id ?? "", updateBody: values }));
+					onCloseModal();
 				}}
 			>
 				{props => (
-					<form onSubmit={props.handleSubmit} className={styles.form} encType="multipart/form-data">
+					<form onSubmit={props.handleSubmit} className={styles.form}>
 						<FormikInput
 							type="text"
 							onChange={props.handleChange}
@@ -77,13 +82,6 @@ export const SuperheroForm = ({ onCloseModal, formState }: IProps) => {
 							name="superpowers"
 							error={props.errors.superpowers}
 							label="Superpowers:"
-						/>
-						<input
-							id="file"
-							name="images"
-							type="file"
-							onChange={event => props.setFieldValue('images', Array.from(event.target.files!))}
-							multiple
 						/>
 						<Button
 							type={ButtonTypes.SUBMIT}

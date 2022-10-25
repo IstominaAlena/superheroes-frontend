@@ -1,13 +1,11 @@
 import { useState } from "react";
 
-import { EFormState } from "../../constants/frontenConstants";
-
 import { SuperheroesGallery } from "../../components/SuperheroesGallery";
 import { SearchForm } from "../../components/SearchForm";
 import { Button } from "../../reusable/components/Button";
 import { GetIcon } from "../../reusable/components/GetIcon";
 import { Modal } from "../../reusable/components/Modal";
-import { SuperheroForm } from "../../components/SuperheroForm";
+import { AddSuperheroForm } from "../../components/AddSuperheroForm";
 
 import styles from "./Home.module.scss";
 
@@ -35,7 +33,7 @@ export const Home = () => {
 
 			{isModalOpen && (
 				<Modal onClose={onCloseModal}>
-					<SuperheroForm onCloseModal={onCloseModal} formState={EFormState.ADD_SUPERHERO} />
+					<AddSuperheroForm onCloseModal={onCloseModal} />
 				</Modal>
 			)}
 		</>

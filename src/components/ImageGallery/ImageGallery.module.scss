@@ -2,8 +2,7 @@
 
 .galleryContainer {
   margin-top: 20px;
-  padding: 20px 0;
-  border-top: 1px solid $line-color;
+  // border-top: 1px solid $line-color;
 
   .title {
     font-size: 30px;
@@ -18,6 +17,7 @@
     margin-bottom: 20px;
 
     .galleryItem {
+      position: relative;
       width: 100%;
       margin-left: 30px;
       margin-top: 30px;
@@ -28,6 +28,33 @@
       &:hover,
       &:focus {
         border-color: $accent-color;
+
+        & .deleteImageButton {
+          display: block;
+        }
+      }
+
+      .deleteImageButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px;
+        border-radius: 50%;
+        background-color: transparent;
+        display: none;
+
+        .icon {
+          fill: $body-color;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: $shadow-color;
+
+          & .icon {
+            fill: $accent-color;
+          }
+        }
       }
     }
   }

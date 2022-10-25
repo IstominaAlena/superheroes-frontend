@@ -4,12 +4,13 @@ import classnames from "classnames";
 interface IProps {
 	type: string,
 	onChange: (e: any) => void,
-	value: string,
+	value?: string,
 	name: string,
 	error?: string,
 	placeholder?: string,
 	label?: string,
-	className?: string;
+	className?: string,
+	multiple?: boolean;
 };
 
 export const FormikInput = ({
@@ -20,7 +21,8 @@ export const FormikInput = ({
 	error,
 	placeholder,
 	label,
-	className = ""
+	className = "",
+	multiple
 }: IProps) => (
 	<div className={styles.inputContainer}>
 		{label && (
@@ -45,6 +47,7 @@ export const FormikInput = ({
 				value={value}
 				name={name}
 				placeholder={placeholder}
+				multiple={multiple}
 			/>)}
 
 		{error && <div id="feedback" className={styles.error}>{error}</div>}
